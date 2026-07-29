@@ -8,7 +8,7 @@ class StorePostRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true; // Autentikasi ditangani oleh middleware auth:sanctum
+        return true; 
     }
 
     public function rules(): array

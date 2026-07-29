@@ -88,4 +88,15 @@ class PostController extends Controller
 
         return $this->success(null, 'Post deleted successfully');
     }
+
+    public function myPosts(Request $request)
+    {
+        $posts = Post::with(['user', 'media'])
+            ->withCount(['likes', 'comments'])
+            ->where('user_id', auth()->id())
+            ->latest()
+            ->paginate($request->get('perPage', 10));
+
+        return $this->successWithPagination(PostResource::collection($posts), 'My posts retrieved successfully');
+    }
 }
