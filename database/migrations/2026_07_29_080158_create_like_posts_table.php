@@ -16,8 +16,7 @@ return new class extends Migration
             $table->foreignId('post_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamp('created_at')->nullable();
-            
-            $table->unique(['post_id', 'user_id']);
+            // $table->unique(['post_id', 'user_id']);
         });
     }
 

@@ -2,23 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\PostMedia;
+use App\Models\Post;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends Factory<PostMedia>
- */
 class PostMediaFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            //
+            'post_id' => Post::factory(),
+            'file_path' => fake()->imageUrl(800, 800, 'nature', true),
+            'media_type' => 'image',
+            'order' => 0,
         ];
     }
 }
