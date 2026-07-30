@@ -20,6 +20,7 @@ class PostResource extends JsonResource
             'likeCount' => $this->likes_count ?? 0,
             'commentCount' => $this->comments_count ?? 0,
             'isLikedByMe' => (bool) $this->is_liked_by_me,
+            'isArchived' => (bool) $this->is_archived,
             'user' => new UserResource($this->whenLoaded('user')),
             'createdAt' => $this->created_at->toIso8601String(),
         ];

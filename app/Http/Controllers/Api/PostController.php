@@ -20,6 +20,7 @@ class PostController extends Controller
             ->withExists(['likes as is_liked_by_me' => function ($query) {
                 $query->where('user_id', auth()->id());
             }])
+            ->where('is_archived', false)
             ->latest()
             ->paginate($request->get('perPage', 10));
 
@@ -94,9 +95,41 @@ class PostController extends Controller
         $posts = Post::with(['user', 'media'])
             ->withCount(['likes', 'comments'])
             ->where('user_id', auth()->id())
+            ->where('is_archived', false)
             ->latest()
             ->paginate($request->get('perPage', 10));
 
         return $this->successWithPagination(PostResource::collection($posts), 'My posts retrieved successfully');
+    }
+
+    public function archivedPosts(Request $request)
+    {
+        $posts = Post::with(['user', 'media'])
+            ->withCount(['likes', 'comments'])
+            ->where('user_id', auth()->id())
+            ->where('is_archived', true)
+            ->latest()
+            ->paginate($request->get('perPage', 10));
+
+        return $this->successWithPagination(PostResource::collection($posts), 'Archived posts retrieved successfully');
+    }
+
+    public function toggleArchive(Post $post)
+    {
+        Gate::authorize('update', $post);
+
+        $post->update([
+            'is_archived' => !$post->is_archived
+        ]);
+
+        $status = $post->is_archived ? 'archived' : 'unarchived';
+
+        $post->load(['user', 'media'])
+            ->loadCount(['likes', 'comments'])
+            ->loadExists(['likes as is_liked_by_me' => function ($query) {
+                $query->where('user_id', auth()->id());
+            }]);
+
+        return $this->success(new PostResource($post), "Post successfully {$status}");
     }
 }

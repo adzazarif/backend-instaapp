@@ -13,6 +13,7 @@ Route::post('/auth/login', [AuthController::class, 'login'])->middleware('thrott
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/posts/my', [PostController::class, 'myPosts']);
+    Route::get('/posts/archived', [PostController::class, 'archivedPosts']);
     Route::post('/auth/logout', [AuthController::class, 'logout']);
     Route::get('/auth/me', [AuthController::class, 'me']);
     
@@ -22,6 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/posts', [PostController::class, 'store']);
     Route::put('/posts/{post}', [PostController::class, 'update']);
     Route::delete('/posts/{post}', [PostController::class, 'destroy']);
+    Route::put('/posts/{post}/archive', [PostController::class, 'toggleArchive']);
     
     // Likes
     Route::post('/posts/{id}/like', [LikeController::class, 'toggle']);
