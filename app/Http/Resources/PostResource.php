@@ -14,7 +14,7 @@ class PostResource extends JsonResource
             'caption' => $this->caption,
             'images' => $this->whenLoaded('media', function () {
                 return $this->media->map(function ($item) {
-                    return url('storage/' . $item->file_path);
+                    return str_starts_with($item->file_path, 'http') ? $item->file_path : url('storage/' . $item->file_path);
                 });
             }, []),
             'likeCount' => $this->likes_count ?? 0,

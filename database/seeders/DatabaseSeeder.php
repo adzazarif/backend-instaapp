@@ -59,19 +59,6 @@ class DatabaseSeeder extends Seeder
                 }
             });
 
-            // Stories
-            Story::factory(rand(1, 3))->create(['user_id' => $user->id])->each(function ($story) use ($users) {
-                // Random views
-                $viewers = $users->random(rand(0, 5));
-                foreach ($viewers as $viewer) {
-                    if ($viewer->id !== $story->user_id) { 
-                        StoryView::factory()->create([
-                            'story_id' => $story->id,
-                            'viewer_id' => $viewer->id,
-                        ]);
-                    }
-                }
-            });
         }
     }
 }

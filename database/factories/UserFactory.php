@@ -26,9 +26,9 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'username' => fake()->unique()->userName(),
+            'username' => $username = fake()->unique()->userName(),
             'email' => fake()->unique()->safeEmail(),
-            'avatar' => fake()->imageUrl(200, 200, 'people', true),
+            'avatar' => 'https://i.pravatar.cc/150?u=' . $username,
             'bio' => fake()->sentence(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),

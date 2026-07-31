@@ -11,7 +11,7 @@ class PostMediaFactory extends Factory
     {
         return [
             'post_id' => Post::factory(),
-            'file_path' => fake()->imageUrl(800, 800, 'nature', true),
+            'file_path' => 'https://picsum.photos/seed/' . fake()->uuid() . '/800/800',
             'media_type' => 'image',
             'order' => 0,
         ];

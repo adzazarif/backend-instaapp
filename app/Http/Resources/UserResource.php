@@ -14,7 +14,7 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'username' => $this->username,
             'email' => $this->email,
-            'avatar' => $this->avatar ? url('storage/' . $this->avatar) : null,
+            'avatar' => $this->avatar ? (str_starts_with($this->avatar, 'http') ? $this->avatar : url('storage/' . $this->avatar)) : null,
             'bio' => $this->when($request->routeIs('auth.me') || $request->is('api/auth/me'), $this->bio),
         ];
     }
